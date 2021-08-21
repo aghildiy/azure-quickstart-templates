@@ -1,0 +1,23 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: AzureResourceManagerTemplateDeployment@3
+  inputs:
+    deploymentScope: 'Resource Group'
+    azureResourceManagerConnection: 'itsd-sandbox-ecmnonprod'
+    subscriptionId: '589cf003-c7b2-48ad-b706-23c09ba302ab'
+    action: 'Create Or Update Resource Group'
+    resourceGroupName: 'ecms_general_RgN01'
+    location: 'West US'
+    templateLocation: 'Linked artifact'
+    csmFile: 'https://raw.githubusercontent.com/aghildiy/pipelines-java/master/linkedStorageAccount.json'
+    deploymentMode: 'Incremental'
